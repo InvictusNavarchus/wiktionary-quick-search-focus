@@ -6,7 +6,7 @@
 // @supportURL   https://github.com/InvictusNavarchus/wiktionary-quick-search-focus/issues
 // @downloadURL  https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
 // @updateURL    https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
-// @version      0.4.0
+// @version      0.4.1
 // @description  Focuses Wiktionary search bar on keypress, appends key, handles dynamic input recreation, and clears input on next keypress if not manually focused.
 // @author       InvictusNavarchus
 // @match        https://*.wiktionary.org/*
@@ -22,7 +22,7 @@
 
     function getLogPrefix() {
         const date = new Date();
-        return `[${date.toISOString().toTimeString().slice(0,8)}] [Wiktionary Quick Search Focus]`;
+        return `[${date.toTimeString().slice(0,8)}] [Wiktionary Quick Search Focus]`;
     }
 
     // Initialize logging
