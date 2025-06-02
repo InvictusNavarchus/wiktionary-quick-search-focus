@@ -6,8 +6,8 @@
 // @supportURL   https://github.com/InvictusNavarchus/wiktionary-quick-search-focus/issues
 // @downloadURL  https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
 // @updateURL    https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
-// @version      0.1.0
-// @description  Focuses Wiktionary search bar on keypress, appends key, and handles dynamic input recreation.
+// @version      0.2.0
+// @description  Focuses Wiktionary search bar on keypress, appends key, handles dynamic input recreation, and clears input on next keypress if not manually focused.
 // @author       InvictusNavarchus
 // @match        https://*.wiktionary.org/*
 // @grant        none
@@ -18,6 +18,7 @@
     'use strict';
 
     let currentSearchInput = null;
+    let shouldClearOnNextKeypress = false;
 
     // Function to find the Wiktionary search input element
     // It tries to find the initial ID, then the selector for the Vue-based recreated input.
@@ -92,6 +93,17 @@
                 // Focus the search input if it's not already focused
                 if (document.activeElement !== currentSearchInput) {
                     currentSearchInput.focus();
+                    // Set flag to clear input on next keypress since user didn't manually focus
+                    shouldClearOnNextKeypress = true;
+                } else {
+                    // User has manually focused on the input, don't clear on next keypress
+                    shouldClearOnNextKeypress = false;
+                }
+
+                // Clear the input if this is the next keypress after auto-focusing
+                if (shouldClearOnNextKeypress) {
+                    currentSearchInput.value = '';
+                    shouldClearOnNextKeypress = false;
                 }
 
                 // Insert the character at the current cursor position
@@ -165,6 +177,8 @@
                 // console.log('Wiktionary Quick Search: Search input focused, updating reference.');
                 currentSearchInput = event.target;
             }
+            // Reset the clear flag when user manually focuses on the search input
+            shouldClearOnNextKeypress = false;
         }
     });
 
