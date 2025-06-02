@@ -6,7 +6,7 @@
 // @supportURL   https://github.com/InvictusNavarchus/wiktionary-quick-search-focus/issues
 // @downloadURL  https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
 // @updateURL    https://raw.githubusercontent.com/InvictusNavarchus/wiktionary-quick-search-focus/master/wiktionary-quick-search-focus.user.js
-// @version      0.3.0
+// @version      0.3.1
 // @description  Focuses Wiktionary search bar on keypress, appends key, handles dynamic input recreation, and clears input on next keypress if not manually focused.
 // @author       InvictusNavarchus
 // @match        https://*.wiktionary.org/*
@@ -110,6 +110,12 @@
         // Ignore Enter key (let it perform its default action, e.g., submit form)
         if (event.key === 'Enter') {
             console.log('Wiktionary Quick Search: Ignoring keydown - Enter key');
+            return;
+        }
+
+        // Ignore arrow keys (navigation keys)
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            console.log('Wiktionary Quick Search: Ignoring keydown - Arrow key');
             return;
         }
 
